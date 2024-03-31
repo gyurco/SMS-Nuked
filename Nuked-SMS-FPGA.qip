@@ -1,0 +1,6 @@
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) Nuked-SMS-FPGA/ym2413.v      ]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) Nuked-SMS-FPGA/ym_lib_sms.v      ]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) Nuked-SMS-FPGA/ym2602.v      ]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) Nuked-SMS-FPGA/sega315_5216.v      ]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) Nuked-SMS-FPGA/sms_board.v      ]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) Nuked-SMS-FPGA/z80.v      ]

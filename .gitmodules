@@ -1,0 +1,6 @@
+[submodule "Nuked-SMS-FPGA"]
+	path = Nuked-SMS-FPGA
+	url = https://github.com/gyurco/Nuked-SMS-FPGA.git
+[submodule "mist-modules"]
+	path = mist-modules
+	url = https://github.com/mist-devel/mist-modules.git
