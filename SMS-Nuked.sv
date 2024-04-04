@@ -202,6 +202,8 @@ wire       save_ram = status[7];
 wire [1:0] lightgun = status[14:13];
 wire       lockmappers = status[15];
 
+assign LED  = ~ioctl_download & ~bk_ena;
+
 ////////////////////   CLOCKS   ///////////////////
 
 wire locked;
@@ -404,7 +406,7 @@ sms_board sms_board
 (
 	.MCLK(clk_sys),
 	.ext_reset(reset),
-	.pause_button(),
+	.pause_button(~(joya[6]&joyb[6])),
 	.reset_button(),
 
 	// z80 ram
