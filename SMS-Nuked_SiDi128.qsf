@@ -427,6 +427,7 @@ set_global_assignment -name SDC_FILE "SMS-Nuked.sdc"
 set_global_assignment -name QIP_FILE "SMS-Nuked.qip"
 set_global_assignment -name QIP_FILE "mist-modules/mist.qip"
 set_global_assignment -name QIP_FILE cyc10/pll.qip
+set_global_assignment -name QIP_FILE cyc10/vram.qip
 set_global_assignment -name SIGNALTAP_FILE output_files/vid.stp
 set_global_assignment -name SIGNALTAP_FILE output_files/cart.stp
 set_global_assignment -name SIGNALTAP_FILE output_files/snd.stp

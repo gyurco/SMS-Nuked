@@ -1,7 +1,6 @@
 set_global_assignment -name SYSTEMVERILOG_FILE SMS-Nuked.sv
 set_global_assignment -name VERILOG_FILE hybrid_pwm_sd.v
 set_global_assignment -name QIP_FILE Nuked-SMS-FPGA.qip
-set_global_assignment -name QIP_FILE vram.qip
 set_global_assignment -name SYSTEMVERILOG_FILE lightgun.sv
 set_global_assignment -name SYSTEMVERILOG_FILE sdram.sv
 set_global_assignment -name VHDL_FILE mappers.vhd
