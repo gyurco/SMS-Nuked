@@ -668,7 +668,7 @@ assign HDMI_PCLK = clk_sys;
 reg [4:0] opll_ch = 0;
 reg       opll_dac_clkD;
 reg signed [15:0] opll_mo_sum, opll_ro_sum;
-reg signed [16:0] aud_mix;
+reg signed [16:0] opll_mix;
 
 always @(posedge clk_sys) begin
     opll_dac_clkD <= opll_dac_clk;
@@ -682,18 +682,24 @@ always @(posedge clk_sys) begin
             opll_ch <= 0;
             opll_mo_sum <= 0;
             opll_ro_sum <= 0;
-            aud_mix <= opll_mo_sum + opll_ro_sum + psg;
+            opll_mix <= opll_mo_sum + opll_ro_sum;
         end
     end
 end
+
+wire signed [16:0] aud_mix = opll_mix + psg;
+wire signed [12:0] aud_mix_clipped = (~aud_mix[16] && |aud_mix[15:13]) ? 13'h0fff : // max volume
+                              (aud_mix[16] && ~&aud_mix[15:13]) ? 13'h1000 : // min volume
+                              aud_mix[12:0];
+
 
 hybrid_pwm_sd dac
 (
 	.clk(clk_sys),
 	.terminate(1'b0),
-	.d_l({~aud_mix[16], aud_mix[15:1]}),
+	.d_l({~aud_mix_clipped[12], aud_mix_clipped[11:0], 3'd0}),
 	.q_l(AUDIO_L),
-	.d_r({~aud_mix[16], aud_mix[15:1]}),
+	.d_r({~aud_mix_clipped[12], aud_mix_clipped[11:0], 3'd0}),
 	.q_r(AUDIO_R)
 );
 
@@ -707,8 +713,8 @@ i2s i2s (
 	.lrclk(I2S_LRCK),
 	.sdata(I2S_DATA),
 
-	.left_chan(aud_mix[16:1]),
-	.right_chan(aud_mix[16:1])
+	.left_chan({aud_mix_clipped, 3'd0}),
+	.right_chan({aud_mix_clipped, 3'd0})
 );
 `ifdef I2S_AUDIO_HDMI
 assign HDMI_MCLK = 0;
@@ -727,7 +733,7 @@ spdif spdif
 	.rst_i(reset),
 	.clk_rate_i(32'd53_180_000),
 	.spdif_o(SPDIF),
-	.sample_i({2{aud_mix[16:1]}})
+	.sample_i({2{aud_mix_clipped, 3'd0}})
 );
 `endif
 
